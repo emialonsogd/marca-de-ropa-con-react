@@ -1,0 +1,17 @@
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    height: 5rem;
+    width: 100%;
+    background-color: rgb(176, 176, 176);
+  }
+  .nav-bar-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+  }
