@@ -1,44 +1,50 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './ItemListContainer.css';
-import ItemList from "./ItemList";
+import ItemCard from "../ItemCard/ItemCard";
 
 function ItemListContainer() {
-    const { categoryId } = useParams();
-    const [productos, setProductos] = useState([]);
-    const [loading, setLoading] = useState(true); // Estado de carga
-    const [error, setError] = useState(null); // Estado de error
-    
-    useEffect(() => {
-      // Simulación de llamada API con Promises
-      const productosMock = [
-        { id: 1, nombre: "Playera Azul", categoria: "Playeras" },
-        { id: 2, nombre: "Pantalón Negro", categoria: "Pantalones" },
-        { id: 3, nombre: "Sudadera Roja", categoria: "Sudaderas" }
-      ];
-  
-      setLoading(true); // Indicamos que se está cargando
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve(productosMock), 1000); // Simulamos la llamada a la API
+  const { categoryId } = useParams();
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const productosMock = [
+      { id: 1, nombre: "Playera Oversize", categoria: "playera", precio: 200 },
+      { id: 2, nombre: "Pantalón Baggy", categoria: "pantalones", precio: 600 },
+      { id: 3, nombre: "Sudadera Cut", categoria: "sudaderas", precio: 500 }
+    ];
+
+    setLoading(true);
+
+    new Promise((resolve) => {
+      setTimeout(() => resolve(productosMock), 1000);
+    })
+      .then((data) => {
+        if (categoryId) {
+          setProductos(data.filter((p) => p.categoria === categoryId));
+        } else {
+          setProductos(data);
+        }
+        setLoading(false);
       })
-        .then((data) => {
-          if (categoryId) {
-            setProductos(data.filter((p) => p.categoria === categoryId)); // Filtramos por categoría
-          } else {
-            setProductos(data); // Si no hay categoría, mostramos todos los productos
-          }
-          setLoading(false); // Terminó la carga
-        })
-        .catch((err) => {
-          setError("Error al cargar los productos"); // Manejo de error
-          setLoading(false);
-        });
-    }, [categoryId]);
-  
-    if (loading) return <p>Cargando productos...</p>;
-    if (error) return <p>{error}</p>;
-  
-    return <ItemList productos={productos} />;
+      .catch(() => {
+        setError("Error al cargar los productos");
+        setLoading(false);
+      });
+  }, [categoryId]);
+
+  if (loading) return <p>Cargando productos...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div className="item-list">
+      {productos.map((producto) => (
+        <ItemCard key={producto.id} producto={producto} />
+      ))}
+    </div>
+  );
 }
 
 export default ItemListContainer;

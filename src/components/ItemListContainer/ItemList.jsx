@@ -1,15 +1,15 @@
+import './ItemList.css';
+import Item from '../Item/Item';
+
 function ItemList({ productos }) {
-    return (
-      <div className="item-list">
-        {productos.map((producto) => (
-          <div key={producto.id} className="item">
-            <h3>{producto.nombre}</h3>
-            <p>{producto.categoria}</p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  
-  export default ItemList;
+  return (
+    <div className="item-list">
+      {productos.map((producto) => (
+        <Item key={producto.id} producto={producto} />
+      ))}
+    </div>
+  );
+}
+
+export default ItemList;
   

@@ -1,12 +1,15 @@
 import { NavLink } from "react-router-dom";
 import CardWidget from '../CardWidget/CardWidget';
 import './Navbar.css';
+import logo from '../../assets/logo.png';
 
 function Navbar() {
   return (
     <header>
       <nav className="nav-bar">
-        <p>LOGO</p>
+          <NavLink to="/">
+            <img src={logo} alt="Logo" className="nav-logo" />
+          </NavLink>
         <ul className="nav-bar-items">
           <li><NavLink to="/">Inicio</NavLink></li>
           <li><NavLink to="/category/playera">Playera</NavLink></li>
